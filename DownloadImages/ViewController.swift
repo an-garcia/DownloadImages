@@ -103,7 +103,42 @@ class ViewController: UIViewController {
     // This code downloads the huge image in a global queue and uses a completion
     // closure.
     @IBAction func asynchronousDownload(_ sender: UIBarButtonItem) {
+        // hide current image
+        photoView.image = nil
         
+        // start animation
+        activityView.startAnimating()
+        
+        withBigImage { (image) -> Void in
+            // Display it
+            self.photoView.image = image
+            
+            // Stop animating
+            self.activityView.stopAnimating()
+        }
+    }
+    
+    // MARK: Download Big Image
+    
+    // This method downloads and image in the background once it's
+    // finished, it runs the closure it receives as a parameter.
+    // This closure is called a completion handler
+    // Go download the image, and once you're done, do _this_ (the completion handler)
+    func withBigImage(completionHandler handler: @escaping (_ image: UIImage) -> Void){
+        
+        DispatchQueue.global(qos: .userInitiated).async { () -> Void in
+            
+            // get the url
+            // get the NSData
+            // turn it into a UIImage
+            if let url = URL(string: BigImages.whale.rawValue), let imgData = try? Data(contentsOf: url), let img = UIImage(data: imgData) {
+                // run the completion block
+                // always in the main queue, just in case!
+                DispatchQueue.main.async(execute: { () -> Void in
+                    handler(img)
+                })
+            }
+        }
     }
     
     // Changes the alpha value (transparency of the image). It's only purpose is to show if the
