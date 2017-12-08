@@ -1,8 +1,7 @@
 # DownloadImages
 
 
-![Scheme](/screenshots/SimulatorScreenShot-iPhone8Plus-2017-11-21at16.36.11x.png)
-![Scheme](/screenshots/SimulatorScreenShot-iPhone8Plus-2017-11-21at17.35.20x.png)
+![Scheme](/screenshots/SimulatorScreenShot-iPhone8Plus-2017-12-07at20.20.35.png)
 
 
 DownloadImages is an iOS sample application that download an image using: synchronous and asynchronous threads.
