@@ -34,6 +34,7 @@ class ViewController: UIViewController {
     // MARK: Outlets
     
     @IBOutlet weak var photoView: UIImageView!
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
     
     // MARK: Actions
     
@@ -41,7 +42,27 @@ class ViewController: UIViewController {
     // the UI.
     // This si for instructional purposes only, never do this.
     @IBAction func synchronousDownload(_ sender: UIBarButtonItem) {
+        // hide current image
+        photoView.image = nil
         
+        // start animation
+        activityView.startAnimating()
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(1) / Double(NSEC_PER_SEC)) { () -> Void in
+            // Get the URL for the image
+            // Obtain the NSData with the image
+            // Turn it into a UIImage
+            if let url = URL(string: BigImages.seaLion.rawValue),
+                let imgData = try? Data(contentsOf: url),
+                let image = UIImage(data: imgData) {
+                
+                // Display it
+                self.photoView.image = image
+                
+                // Stop animating
+                self.activityView.stopAnimating()
+            }
+        }
     }
     
     // This method avoids blocking by creating a new queue that runs
